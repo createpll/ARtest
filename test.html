@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Free AR Experience</title>
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <!-- Optional: A-Frame Extras for things like animation mixers if your model has animation -->
+    <script src="https://cdn.jsdelivr.net/npm/aframe-extras@7.2.0/dist/aframe-extras.min.js"></script>
+    <style>
+      /* Hide the VR button if you only want AR */
+      .a-enter-vr { display: none !important; }
+    </style>
+  </head>
+  <body>
+    <!-- A-Frame scene set up for AR -->
+    <a-scene
+      vr-mode-ui="enabled: false"
+      renderer="logarithmicDepthBuffer: true;"
+      gltf-model="dracoDecoderPath: https://cdn.jsdelivr.net/npm/three@0.158.0/examples/jsm/libs/draco/;"
+      ar-modes="webxr, camera, dont-care"
+      embedded>
+
+      <!-- Assets management: Load your model here -->
+      <a-assets>
+        <!-- Make sure the src path is correct relative to your index.html -->
+        <a-asset-item id="model" src="https://cdn.tinyglb.com/models/e5f3b65737a64c1487cef711af1042ae.glb"></a-asset-item>
+      </a-assets>
+
+      <!-- Entity to hold your 3D model -->
+      <!-- The 'gltf-model' component loads your model asset -->
+      <!-- Position and scale will determine where it initially appears relative to the AR anchor point.
+           You'll likely need to adjust scale. A position of 0 0 0 means it appears at the detected anchor point. -->
+      <a-entity
+        gltf-model="#model"
+        rotation="0 0 0"
+        scale="0.1 0.1 0.1"> <!-- <<< ADJUST SCALE AS NEEDED! -->
+      </a-entity>
+
+      <!-- Optional: Light source for your scene if your model needs it -->
+       <a-entity light="type: directional; color: #fff; intensity: 0.8" position="-0.5 1 1"></a-entity>
+       <a-entity light="type: ambient; color: #bbb; intensity: 0.2"></a-entity>
+
+      <!-- A-Frame automatically handles camera and AR interaction (like surface detection and placement) -->
+
+    </a-scene>
+
+    <!-- Basic instruction text -->
+    <div style="position: fixed; bottom: 10px; width: 100%; text-align: center; z-index: 10; color: white; text-shadow: 1px 1px 2px black;">
+        Point your camera at a surface to place the model.
+    </div>
+
+  </body>
+</html>
